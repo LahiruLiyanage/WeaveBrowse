@@ -6,7 +6,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.WebView;
 
-import java.io.IOException;
+import java.io.*;
+import java.net.Socket;
 
 public class MainSceneController {
     public AnchorPane root;
@@ -24,7 +25,7 @@ public class MainSceneController {
 
     }
 
-    public void txtAddressOnAction(ActionEvent event) {
+    public void txtAddressOnAction(ActionEvent event) throws IOException {
         url = txtAddress.getText();
         if (url.isBlank()) return;
         loadWebPage(url);
@@ -89,6 +90,37 @@ public class MainSceneController {
             path = "/";
         } else {
             path = url.substring(pathIndex);
+        }
+
+        // URL validation
+        if (port.isBlank() || host.isBlank()) {
+            throw new RuntimeException("Invalid web page address");
+        } else {
+            System.out.println("Protocol: " + protocol);
+            System.out.println("Host: " + host);
+            System.out.println("Port: " + port);
+            System.out.println("Path: " + path);
+
+            int portInt = Integer.parseInt(port);
+            Socket socket = new Socket(host, portInt);
+            System.out.println("Connected to " + socket.getRemoteSocketAddress());
+
+            OutputStream os = socket.getOutputStream();
+            BufferedOutputStream bos = new BufferedOutputStream(os);
+
+            String request = """
+                GET %s HTTP/1.1
+                Host: %s
+                User Agent: dep-browser/1
+                Connection: close
+                Accept: text/html;
+                
+                """.formatted(path, host);
+
+            bos.write(request.getBytes());
+            bos.flush();
+
+
         }
 
 
