@@ -40,20 +40,27 @@ This project was developed to:
 - Socket Programming
 - HTTP Protocol
 
+## 📸 Screenshots
+
+![Screenshot](assets/screenshots/weavebrowser_ui.png)
+
 ## 📋 Setup Instructions
+### Prerequisites
+- Java Development Kit (**JDK 11+**)
+- JavaFX SDK (if not bundled with JDK)
+- A Java-compatible IDE (IntelliJ IDEA recommended)
 
-1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/WeaveBrowse.git
-```
-
-2. Prerequisites:
-    - JDK 11 or higher
-    - JavaFX SDK
-    - IDE (IntelliJ IDEA recommended)
-
-3. Build and run the application
-
+### Installation
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/yourusername/WeaveBrowse.git
+   ```
+2. **Navigate to the Project Folder:**
+   ```bash
+   cd WeaveBrowse
+   ```
+3. **Run the Application:**
+   Compile and run the JavaFX project through your IDE or using the command line.
 ## 🚀 Usage Guide
 
 1. Launch WeaveBrowse
@@ -120,5 +127,6 @@ For any questions or feedback, feel free to reach out:
 ## 📄 License
 
 This project is open-source and available under the [MIT License](LICENCE.txt).
+
 ---
 *This project was created as an educational demonstration of HTTP protocol implementation. While functional, it's primarily intended to showcase understanding of web protocols and network programming concepts.*
