@@ -28,6 +28,15 @@ public class MainSceneController {
         txtAddress.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) Platform.runLater(txtAddress::selectAll);
         });
+
+        // Load the initial webpage
+        Platform.runLater(() -> {
+            try {
+                loadWebPage(txtAddress.getText());
+            } catch (IOException e) {
+                showError("Error", "Failed to load initial webpage", e.getMessage());
+            }
+        });
     }
 
     public void txtAddressOnAction(ActionEvent event) {
