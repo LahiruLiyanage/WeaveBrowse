@@ -44,17 +44,11 @@ public class MainSceneController {
         alert.showAndWait();
     }
 
-    private void loadWebPage(String url) throws IOException {
-        if (url.isBlank()) return;
-
-        // Getting Protocol
-        String protocol = "";
-        int protocolIndex = url.indexOf("://");
-        if (protocolIndex != -1) {
-            String protocolName = url.substring(protocolIndex + 3);
-            protocol = url.substring(0, protocolIndex);
-        } else {
-            protocol = "http";
+    private void loadWebPage(String urlString) throws IOException {
+        // Normalize URL
+        if (!urlString.toLowerCase().startsWith("http://") &&
+                !urlString.toLowerCase().startsWith("https://")) {
+            urlString = "http://" + urlString;
         }
 
         // Getting Host
