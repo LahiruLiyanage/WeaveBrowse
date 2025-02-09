@@ -6,7 +6,7 @@
 
     <groupId>lk.ijse.dep13</groupId>
     <artifactId>weave-browse</artifactId>
-    <version>0.1.0</version>
+    <version>1.0.0</version>
 
     <properties>
         <maven.compiler.source>22</maven.compiler.source>
