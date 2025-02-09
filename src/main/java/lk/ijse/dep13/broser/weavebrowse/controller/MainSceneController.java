@@ -2,6 +2,7 @@ package lk.ijse.dep13.broser.weavebrowse.controller;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.WebView;
@@ -26,9 +27,21 @@ public class MainSceneController {
     }
 
     public void txtAddressOnAction(ActionEvent event) throws IOException {
-        url = txtAddress.getText();
-        if (url.isBlank()) return;
-        loadWebPage(url);
+        try {
+            String url = txtAddress.getText().trim();
+            if (url.isBlank()) return;
+            loadWebPage(url);
+        } catch (Exception e) {
+            showError("Error", "Failed to load webpage", e.getMessage());
+        }
+    }
+
+    private void showError(String title, String header, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
     private void loadWebPage(String url) throws IOException {
