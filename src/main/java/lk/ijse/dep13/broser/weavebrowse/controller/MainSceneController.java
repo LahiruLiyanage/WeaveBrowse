@@ -82,6 +82,15 @@ public class MainSceneController {
             }
         }
 
+        // Getting Path
+        int pathIndex = url.indexOf(host + port + "/");
+        String path = "";
+        if (pathIndex == -1) {
+            path = "/";
+        } else {
+            path = url.substring(pathIndex);
+        }
+
 
 
 
