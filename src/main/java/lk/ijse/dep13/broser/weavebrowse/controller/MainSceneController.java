@@ -41,6 +41,23 @@ public class MainSceneController {
         } else {
             protocol = "http";
         }
+
+        // Getting Host
+        String host = "";
+        if (protocolIndex != -1){
+            host = url.substring(protocolIndex + 3);
+        } else {
+            host = url;
+        }
+        if (host.indexOf(":") != -1){
+            host = host.substring(0, host.indexOf(":"));
+        }else if (host.indexOf("/") == -1) {
+            host = host;
+        } else {
+            host = host.substring(0, (host.indexOf("/")));
+        }
+
+
     }
 
 
