@@ -120,6 +120,52 @@ public class MainSceneController {
             bos.write(request.getBytes());
             bos.flush();
 
+            new Thread(() -> {
+                try {
+                    InputStream is = socket.getInputStream();
+                    InputStreamReader isr = new InputStreamReader(is);
+                    BufferedReader br = new BufferedReader(isr);
+
+                    // Reading the Status Line
+                    String statusLine = br.readLine();
+                    int statusCode = Integer.parseInt(statusLine.split(" ")[1]);
+                    System.out.println("Status Code: " + statusCode);
+                    boolean redirection = statusCode >= 300 && statusCode <= 399;
+
+                    // Read Request headers
+                    String contentType = null;
+                    String line;
+                    while ((line = br.readLine()) != null && !line.isBlank()) {
+                        String header = line.split(":")[0].strip();
+                        String value = line.substring(line.indexOf(":") + 1);
+
+                        if (redirection) {
+                            if (!header.equalsIgnoreCase("Location")) continue;
+                            System.out.println("Redirection: " + value);
+                            Platform.runLater(() -> txtAddress.setText(value));
+                            loadWebPage(value);
+                            return;
+                        } else {
+                            if (!header.equalsIgnoreCase("content-type")) continue;
+                            contentType = value;
+                        }
+                    }
+                    System.out.println("Content type: " + contentType);
+
+                    String content = "";
+                    while ((line = br.readLine()) != null) {
+                        content += line + "\n";
+                    }
+                    System.out.println("Content: " + content);
+                    String finalContent = content;
+                    Platform.runLater(() -> {
+                        wbDisplay.getEngine().loadContent(finalContent);
+                    });
+
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }).start();
 
         }
 
